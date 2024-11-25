@@ -13,9 +13,9 @@ const app = express();
 // Middleware CORS
 app.use(
   cors({
-    origin: 'http://localhost:5173', // Alamat frontend React Anda
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Metode HTTP yang diizinkan
-    credentials: true, // Izinkan pengiriman cookies/authorization header
+    origin: 'http://localhost:5174', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    credentials: true, 
   })
 );
 

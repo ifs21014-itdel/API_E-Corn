@@ -19,6 +19,33 @@ const AuthController = {
       res.status(401).json({ error: error.message });
     }
   },
+  getAllUsers: async (req, res) => {
+    try {
+      const users = await AuthService.getAllUsers();
+      res.status(200).json({ users });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  editUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { username, email, role } = req.body;
+      const updatedUser = await AuthService.editUser(req.user, id, { username, email, role });
+      res.status(200).json({ message: "User updated successfully", updatedUser });
+    } catch (error) {
+      res.status(403).json({ error: error.message });
+    }
+  },
+  deleteUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+      await AuthService.deleteUser(req.user, id);
+      res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+      res.status(403).json({ error: error.message });
+    }
+  },
 };
 
 module.exports = AuthController;
