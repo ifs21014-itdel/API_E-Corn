@@ -6,7 +6,7 @@ require('dotenv').config();
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const aboutRoutes = require('./routes/aboutRoutes');
-const featuresRoutes = require('./routes/featuresRoutes');
+const featuresRoutes = require('./routes/featuresRoutes'); // Import sekali saja
 
 const app = express();
 

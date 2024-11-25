@@ -1,26 +1,26 @@
 const Features = require('../models/featuresModel');
 
 const FeaturesService = {
-  getAll: async () => {
-    return await Features.getAll();
+  create: async (title, description, imageUrl) => {
+    return await Features.createFeature(title, description, imageUrl);
   },
   getById: async (id) => {
-    const feature = await Features.getById(id);
+    const feature = await Features.getFeatureById(id);
     if (!feature) throw new Error('Feature not found');
     return feature;
   },
-  create: async (title, description, imageUrl) => {
-    return await Features.create(title, description, imageUrl);
+  getAll: async () => {
+    return await Features.getAllFeatures();
   },
   update: async (id, title, description, imageUrl) => {
-    const feature = await Features.getById(id);
+    const feature = await Features.getFeatureById(id);
     if (!feature) throw new Error('Feature not found');
-    return await Features.update(id, title, description, imageUrl);
+    return await Features.updateFeature(id, title, description, imageUrl);
   },
   delete: async (id) => {
-    const feature = await Features.getById(id);
+    const feature = await Features.getFeatureById(id);
     if (!feature) throw new Error('Feature not found');
-    return await Features.delete(id);
+    return await Features.deleteFeature(id);
   },
 };
 

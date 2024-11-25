@@ -1,10 +1,11 @@
 const FeaturesService = require('../services/featuresService');
 
 const FeaturesController = {
-  getAll: async (req, res) => {
+  create: async (req, res) => {
     try {
-      const features = await FeaturesService.getAll();
-      res.status(200).json(features);
+      const { title, description, imageUrl } = req.body;
+      const result = await FeaturesService.create(title, description, imageUrl);
+      res.status(201).json({ message: 'Feature created successfully', id: result.insertId });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -18,11 +19,10 @@ const FeaturesController = {
       res.status(404).json({ error: error.message });
     }
   },
-  create: async (req, res) => {
+  getAll: async (req, res) => {
     try {
-      const { title, description, imageUrl } = req.body;
-      const result = await FeaturesService.create(title, description, imageUrl);
-      res.status(201).json({ message: 'Feature created successfully', id: result.insertId });
+      const features = await FeaturesService.getAll();
+      res.status(200).json(features);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
