@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: 'http://localhost:5174', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    credentials: true, 
+    credentials: true, // Izinkan pengiriman cookies/authorization header
   })
 );
 
