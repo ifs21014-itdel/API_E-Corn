@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Import middleware CORS
+const fs = require('fs'); // File system module
+const path = require('path'); // Path module
 require('dotenv').config();
 
 // Routes
@@ -21,6 +23,16 @@ app.use(
 
 // Middleware untuk parsing JSON
 app.use(bodyParser.json());
+
+// Pastikan folder `uploads` tersedia
+const uploadDir = path.join(__dirname, 'uploads'); // Path folder `uploads` di root proyek
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir); // Buat folder jika belum ada
+  console.log('Folder uploads dibuat');
+}
+
+// Berikan akses publik ke file dalam folder `uploads`
+app.use('/uploads', express.static(uploadDir));
 
 // Routes
 app.use('/auth', authRoutes);

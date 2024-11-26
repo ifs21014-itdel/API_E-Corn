@@ -3,13 +3,19 @@ const AboutService = require('../services/aboutService');
 const AboutController = {
   create: async (req, res) => {
     try {
-      const { judul, deskripsiSingkat, deskripsiPanjang, gambar } = req.body;
+      console.log(req.file); // Log untuk memeriksa apakah file diterima
+      console.log(req.body); // Log untuk memeriksa data lainnya
+  
+      const { judul, deskripsiSingkat, deskripsiPanjang } = req.body;
+      const gambar = req.file ? req.file.filename : null; // Ambil nama file atau null
       const result = await AboutService.create(judul, deskripsiSingkat, deskripsiPanjang, gambar);
       res.status(201).json({ message: 'About entry created successfully', id: result.insertId });
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: error.message });
     }
   },
+  
   getById: async (req, res) => {
     try {
       const { id } = req.params;
@@ -30,7 +36,8 @@ const AboutController = {
   update: async (req, res) => {
     try {
       const { id } = req.params;
-      const { judul, deskripsiSingkat, deskripsiPanjang, gambar } = req.body;
+      const { judul, deskripsiSingkat, deskripsiPanjang } = req.body;
+      const gambar = req.file ? req.file.filename : null; // Ambil nama file yang diunggah
       await AboutService.update(id, judul, deskripsiSingkat, deskripsiPanjang, gambar);
       res.status(200).json({ message: 'About entry updated successfully' });
     } catch (error) {
