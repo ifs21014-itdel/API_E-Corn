@@ -29,6 +29,11 @@ const migrateAndSeed = async () => {
     await connection.query("DROP TABLE IF EXISTS users;");
     await connection.query("DROP TABLE IF EXISTS about;");
     await connection.query("DROP TABLE IF EXISTS features;");
+    await connection.query("DROP TABLE IF EXISTS educations;");
+    await connection.query("DROP TABLE IF EXISTS news;");
+   
+    await connection.query("DROP TABLE IF EXISTS comments;");
+    await connection.query("DROP TABLE IF EXISTS topics;");
 
     // Tabel `users`
     await connection.query(`
@@ -54,6 +59,19 @@ const migrateAndSeed = async () => {
       );
     `);
 
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS educations (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL, -- Judul edukasi
+        content TEXT NOT NULL, -- Konten teks edukasi
+        audio_url VARCHAR(255), -- URL untuk file audio tutorial
+        video_url VARCHAR(255), -- URL untuk video tutorial
+        image_url VARCHAR(255), -- URL untuk gambar pendukung
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Waktu pembuatan
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Waktu update
+      );
+    `);
+
     // Tabel `features`
     await connection.query(`
       CREATE TABLE IF NOT EXISTS features (
@@ -65,6 +83,44 @@ const migrateAndSeed = async () => {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       );
     `);
+
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS news (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL, -- Judul berita
+        content TEXT NOT NULL, -- Konten berita
+        image_url VARCHAR(255), -- URL untuk gambar berita
+        source_url VARCHAR(255), -- URL sumber berita
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Waktu pembuatan berita
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Waktu update berita
+      );
+    `); 
+
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS topics (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL, -- Judul topik diskusi
+        content TEXT NOT NULL, -- Konten topik diskusi
+        user_id INT NOT NULL, -- ID pengguna sebagai penulis
+        image_url VARCHAR(255), -- URL untuk gambar yang diunggah
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Waktu pembuatan
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Waktu update
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE -- Relasi ke tabel users
+      );
+    `);
+    
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS comments (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        topic_id INT NOT NULL, -- ID topik diskusi terkait
+        user_id INT NOT NULL, -- ID pengguna sebagai penulis komentar
+        content TEXT NOT NULL, -- Konten komentar
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Waktu pembuatan komentar
+        FOREIGN KEY (topic_id) REFERENCES topics(id) ON DELETE CASCADE, -- Relasi ke tabel topics
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE -- Relasi ke tabel users
+      );
+    `);
+    
 
     console.log("All tables created successfully.");
 
