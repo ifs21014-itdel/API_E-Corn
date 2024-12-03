@@ -26,14 +26,15 @@ const migrateAndSeed = async () => {
     console.log("Connected to database:", process.env.DB_DATABASE);
 
     // Drop tabel jika ada
+    await connection.query("DROP TABLE IF EXISTS comments;");
+    await connection.query("DROP TABLE IF EXISTS topics;");
     await connection.query("DROP TABLE IF EXISTS users;");
     await connection.query("DROP TABLE IF EXISTS about;");
     await connection.query("DROP TABLE IF EXISTS features;");
     await connection.query("DROP TABLE IF EXISTS educations;");
     await connection.query("DROP TABLE IF EXISTS news;");
    
-    await connection.query("DROP TABLE IF EXISTS comments;");
-    await connection.query("DROP TABLE IF EXISTS topics;");
+  
 
     // Tabel `users`
     await connection.query(`
@@ -53,7 +54,10 @@ const migrateAndSeed = async () => {
         judul VARCHAR(255) NOT NULL,
         deskripsi_singkat TEXT,
         deskripsi_panjang TEXT,
-        gambar VARCHAR(255),
+         gambar1 VARCHAR(255), -- Gambar pertama
+          gambar2 VARCHAR(255), -- Gambar kedua
+          gambar3 VARCHAR(255), -- Gambar ketiga
+          gambar4 VARCHAR(255), -- Gambar keempat
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       );
@@ -131,6 +135,23 @@ const migrateAndSeed = async () => {
       INSERT INTO users (username, email, password, role) VALUES
       ('admin', 'admin@example.com', ?, 'admin')
     `, [hashedPassword]);
+
+    // Tambahkan data ke tabel about
+    await connection.query(`
+      INSERT INTO about (judul, deskripsi_singkat, deskripsi_panjang, gambar1, gambar2, gambar3, gambar4)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `, [
+      'Tentang Kami',
+      'Platform ini bertujuan untuk meningkatkan pengetahuan petani dalam pengelolaan limbah pertanian, sehingga mereka dapat memanfaatkannya secara lebih efektif dan berkelanjutan. Melalui edukasi platform ini akan membantu petani mengolah limbah organik menjadi sumber daya yang berguna, seperti pupuk kompos atau bahan pakan ternak, yang tidak hanya mendukung produktivitas pertanian, tetapi juga berkontribusi pada pelestarian lingkungan.',
+      'Platform ini didedikasikan untuk memberikan edukasi praktis kepada petani mengenai cara-cara pengelolaan limbah pertanian yang efektif dan ramah lingkungan. Dengan meningkatnya kesadaran akan pentingnya keberlanjutan, platform ini membantu petani mengolah limbah organik menjadi produk yang memiliki nilai tambah, seperti pupuk kompos, yang tidak hanya mendukung produktivitas pertanian tetapi juga berperan dalam mengurangi dampak negatif terhadap lingkungan. Kami percaya bahwa melalui pendidikan yang tepat, para petani dapat memanfaatkan potensi limbah mereka untuk menciptakan solusi yang saling menguntungkan bagi mereka dan lingkungan sekitar. Dengan demikian, platform ini tidak hanya fokus pada peningkatan hasil pertanian tetapi juga mendorong petani untuk berperan aktif dalam pelestarian alam.',
+      'pic1.png',
+      'pic2.png',
+      'pic3.png',
+      'pic15.jpeg'
+    ]);
+
+console.log("About entry added successfully.");
+
 
     console.log("Admin user created successfully.");
 
