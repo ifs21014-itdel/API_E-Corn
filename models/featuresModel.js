@@ -6,16 +6,19 @@ const Features = {
     const [result] = await db.execute(query, [title, description, imageUrl]);
     return result;
   },
+
   getFeatureById: async (id) => {
     const query = `SELECT * FROM features WHERE id = ?`;
     const [rows] = await db.execute(query, [id]);
     return rows[0];
   },
+
   getAllFeatures: async () => {
     const query = `SELECT * FROM features`;
     const [rows] = await db.execute(query);
     return rows;
   },
+
   updateFeature: async (id, title, description, imageUrl) => {
     const query = `
       UPDATE features 
@@ -24,6 +27,7 @@ const Features = {
     const [result] = await db.execute(query, [title, description, imageUrl, id]);
     return result;
   },
+
   deleteFeature: async (id) => {
     const query = `DELETE FROM features WHERE id = ?`;
     const [result] = await db.execute(query, [id]);

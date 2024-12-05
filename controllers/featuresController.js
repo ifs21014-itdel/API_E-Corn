@@ -3,13 +3,20 @@ const FeaturesService = require('../services/featuresService');
 const FeaturesController = {
   create: async (req, res) => {
     try {
-      const { title, description, imageUrl } = req.body;
+      const { title, description } = req.body;
+
+      // Menangani gambar
+      const imageUrl = req.files?.image ? req.files.image[0].filename : null;
+
+      // Menyimpan data
       const result = await FeaturesService.create(title, description, imageUrl);
       res.status(201).json({ message: 'Feature created successfully', id: result.insertId });
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: error.message });
     }
   },
+
   getById: async (req, res) => {
     try {
       const { id } = req.params;
@@ -19,6 +26,7 @@ const FeaturesController = {
       res.status(404).json({ error: error.message });
     }
   },
+
   getAll: async (req, res) => {
     try {
       const features = await FeaturesService.getAll();
@@ -27,16 +35,23 @@ const FeaturesController = {
       res.status(500).json({ error: error.message });
     }
   },
+
   update: async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, description, imageUrl } = req.body;
+      const { title, description } = req.body;
+
+      // Menangani gambar
+      const imageUrl = req.files?.image ? req.files.image[0].filename : null;
+
+      // Memperbarui data
       await FeaturesService.update(id, title, description, imageUrl);
       res.status(200).json({ message: 'Feature updated successfully' });
     } catch (error) {
       res.status(404).json({ error: error.message });
     }
   },
+
   delete: async (req, res) => {
     try {
       const { id } = req.params;
