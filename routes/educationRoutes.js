@@ -1,17 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const EducationController = require('../controllers/educationController');
-const AuthMiddleware = require('../middlewares/authMiddleware'); 
-const AdminOnlyMiddleware = require('../middlewares/AdminOnlyMiddleware'); 
-const upload = require('../middlewares/uploadMiddleware'); 
+const upload = require('../middlewares/uploadMiddleware');
 
-
-router.post('/', AuthMiddleware, AdminOnlyMiddleware, upload.single('image'), EducationController.create); 
-router.put('/:id', AuthMiddleware, AdminOnlyMiddleware, upload.single('image'), EducationController.update); 
-router.delete('/:id', AuthMiddleware, AdminOnlyMiddleware, EducationController.delete); 
-
-
-router.get('/', AuthMiddleware, EducationController.getAll);
-router.get('/:id', AuthMiddleware, EducationController.getById); 
+// Pastikan nama field di sini adalah 'image'
+router.post('/', upload.single('image'), EducationController.create);
+router.put('/:id', upload.single('image'), EducationController.update);
+router.delete('/:id', EducationController.delete);
+router.get('/', EducationController.getAll);
+router.get('/:id', EducationController.getById);
 
 module.exports = router;
