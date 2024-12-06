@@ -70,7 +70,7 @@ const migrateAndSeed = async () => {
         content TEXT NOT NULL, -- Konten teks edukasi
         audio_url VARCHAR(255), -- URL untuk file audio tutorial
         video_url VARCHAR(255), -- URL untuk video tutorial
-        image_url VARCHAR(255), -- URL untuk gambar pendukung
+        image VARCHAR(255), -- URL untuk gambar pendukung
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Waktu pembuatan
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Waktu update
       );

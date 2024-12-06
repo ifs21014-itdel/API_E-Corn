@@ -1,12 +1,12 @@
 const db = require('../config/db');
 
 const Education = {
-  createEducation: async (title, content, audio_url, video_url, image_url) => {
+  createEducation: async (title, content, audio_url, video_url, image) => {
     const query = `
-      INSERT INTO educations (title, content, audio_url, video_url, image_url) 
+      INSERT INTO educations (title, content, audio_url, video_url, image) 
       VALUES (?, ?, ?, ?, ?)
     `;
-    const [result] = await db.execute(query, [title, content, audio_url, video_url, image_url]);
+    const [result] = await db.execute(query, [title, content, audio_url, video_url, image]);
     return result;
   },
 
@@ -22,13 +22,13 @@ const Education = {
     return rows[0];
   },
 
-  updateEducation: async (id, title, content, audio_url, video_url, image_url) => {
+  updateEducation: async (id, title, content, audio_url, video_url, image) => {
     const query = `
       UPDATE educations 
-      SET title = ?, content = ?, audio_url = ?, video_url = ?, image_url = ?, updated_at = CURRENT_TIMESTAMP
+      SET title = ?, content = ?, audio_url = ?, video_url = ?, image = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
     `;
-    const [result] = await db.execute(query, [title, content, audio_url, video_url, image_url, id]);
+    const [result] = await db.execute(query, [title, content, audio_url, video_url, image, id]);
     return result;
   },
 

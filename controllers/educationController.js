@@ -6,9 +6,9 @@ const EducationController = {
       console.log('File:', req.file); // Log file yang diunggah
       console.log('Body:', req.body); // Log data body
       const { title, content, audio_url, video_url } = req.body;
-      const image_url = req.file ? req.file.filename : null; // Nama file yang diunggah
-      const result = await EducationService.create(title, content, audio_url, video_url, image_url);
-      res.status(201).json({ message: 'File uploaded successfully', image_url });
+      const image = req.file ? req.file.filename : null; // Nama file yang diunggah
+      const result = await EducationService.create(title, content, audio_url, video_url, image);
+      res.status(201).json({ message: 'File uploaded successfully', image });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -37,8 +37,8 @@ const EducationController = {
     try {
       const { id } = req.params;
       const { title, content, audio_url, video_url } = req.body;
-      const image_url = req.file ? req.file.filename : null;
-      await EducationService.update(id, title, content, audio_url, video_url, image_url);
+      const image = req.file ? req.file.filename : null;
+      await EducationService.update(id, title, content, audio_url, video_url, image);
       res.status(200).json({ message: 'Education entry updated successfully' });
     } catch (error) {
       res.status(404).json({ error: error.message });
