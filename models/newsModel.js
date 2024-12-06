@@ -1,12 +1,12 @@
 const db = require('../config/db');
 
 const News = {
-  createNews: async (title, content, image_url, source_url) => {
+  createNews: async (title, content, date, image_url, source_url) => {
     const query = `
-      INSERT INTO news (title, content, image_url, source_url)
-      VALUES (?, ?, ?, ?)
+      INSERT INTO news (title, content, date, image_url, source_url)
+      VALUES (?, ?, ?, ?, ?)
     `;
-    const [result] = await db.execute(query, [title, content, image_url, source_url]);
+    const [result] = await db.execute(query, [title, content, date, image_url, source_url]);
     return result;
   },
 
@@ -22,13 +22,13 @@ const News = {
     return rows[0];
   },
 
-  updateNews: async (id, title, content, image_url, source_url) => {
+  updateNews: async (id, title, content, date, image_url, source_url) => {
     const query = `
       UPDATE news
-      SET title = ?, content = ?, image_url = ?, source_url = ?, updated_at = CURRENT_TIMESTAMP
+      SET title = ?, content = ?, date = ?, image_url = ?, source_url = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
     `;
-    const [result] = await db.execute(query, [title, content, image_url, source_url, id]);
+    const [result] = await db.execute(query, [title, content, date, image_url, source_url, id]);
     return result;
   },
 

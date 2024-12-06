@@ -1,8 +1,8 @@
 const News = require('../models/newsModel');
 
 const NewsService = {
-  create: async (title, content, image_url, source_url) => {
-    return await News.createNews(title, content, image_url, source_url);
+  create: async (title, content, date, image_url, source_url) => {
+    return await News.createNews(title, content, date, image_url, source_url);
   },
 
   getAll: async () => {
@@ -15,10 +15,10 @@ const NewsService = {
     return news;
   },
 
-  update: async (id, title, content, image_url, source_url) => {
+  update: async (id, title, content, date, image_url, source_url) => {
     const news = await News.getNewsById(id);
     if (!news) throw new Error('News not found');
-    return await News.updateNews(id, title, content, image_url, source_url);
+    return await News.updateNews(id, title, content, date, image_url, source_url);
   },
 
   delete: async (id) => {
