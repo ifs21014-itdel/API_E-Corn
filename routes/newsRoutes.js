@@ -9,7 +9,7 @@ const upload = require('../middlewares/uploadMiddleware'); // Middleware untuk u
 router.post('/', AuthMiddleware, AdminOnlyMiddleware, upload.single('image'), NewsController.create);
 router.put('/:id', AuthMiddleware, AdminOnlyMiddleware, upload.single('image'), NewsController.update);
 router.delete('/:id', AuthMiddleware, AdminOnlyMiddleware, NewsController.delete);
-router.get('/', AuthMiddleware, NewsController.getAll);
-router.get('/:id', AuthMiddleware, NewsController.getById);
+router.get('/',  NewsController.getAll);
+router.get('/:id',  NewsController.getById);
 
 module.exports = router;
