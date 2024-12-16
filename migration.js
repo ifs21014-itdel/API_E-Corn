@@ -116,14 +116,14 @@ const migrateAndSeed = async () => {
     
     await connection.query(`
       CREATE TABLE IF NOT EXISTS comments (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        topic_id INT NOT NULL, -- ID topik diskusi terkait
-        user_id INT NOT NULL, -- ID pengguna sebagai penulis komentar
-        content TEXT NOT NULL, -- Konten komentar
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Waktu pembuatan komentar
-        FOREIGN KEY (topic_id) REFERENCES topics(id) ON DELETE CASCADE, -- Relasi ke tabel topics
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE -- Relasi ke tabel users
-      );
+          id INT AUTO_INCREMENT PRIMARY KEY,
+          topic_id INT NOT NULL, -- ID topik diskusi terkait
+          user_id INT NOT NULL, -- ID pengguna sebagai penulis komentar
+          content TEXT NOT NULL, -- Konten komentar
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Waktu pembuatan komentar
+          FOREIGN KEY (topic_id) REFERENCES topics(id) ON DELETE CASCADE, -- Relasi ke tabel topics
+          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE -- Relasi ke tabel users
+        );
     `);
     
 
