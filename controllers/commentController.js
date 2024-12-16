@@ -3,12 +3,16 @@ const CommentService = require('../services/commentService');
 const CommentController = {
   create: async (req, res) => {
     try {
-      const { topic_id, content } = req.body;
-      const user_id = req.user.id; // Ambil user_id dari token autentikasi
-      const result = await CommentService.create(topic_id, user_id, content);
+      const { topicId, text } = req.body;
+      console.log(req.body);
+      const user_id = req.user.id; 
+   
+      // Ambil user_id dari token autentikasi
+      const result = await CommentService.create(topicId, user_id, text);
       res.status(201).json({ message: 'Comment created successfully', id: result.insertId });
     } catch (error) {
       res.status(500).json({ error: error.message });
+      console.log(error.message);
     }
   },
 
