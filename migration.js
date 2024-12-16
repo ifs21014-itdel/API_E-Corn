@@ -170,6 +170,92 @@ for (const feature of features) {
 
 console.log("Features seeded successfully.");
 
+const educations = [
+  {
+    title: 'Solusi Limbah Pertanian untuk Peningkatan Kualitas Tanah',
+    content:
+      'Biochar adalah bahan kaya karbon yang dihasilkan melalui proses pirolisis, yaitu pembakaran bahan organik (seperti limbah tanaman, kayu, atau biomassa) pada suhu tinggi dalam kondisi minim oksigen. Biochar mirip dengan arang, tetapi berbeda dalam penggunaannya, terutama untuk meningkatkan kualitas tanah dan menyimpan karbon dalam jangka panjang.',
+    audio_url: null,
+    video_url: 'https://www.youtube.com/watch?v=jz-LwOKuMPM',
+    image: 'edukasi1.jpeg',
+  },
+  {
+    title: 'Pengolahan Limbah Jerami Jagung Menjadi Pakan Ternak',
+    content:
+      'Jerami jagung, yang biasanya dianggap sebagai limbah setelah panen, sebenarnya memiliki potensi besar sebagai sumber pakan ternak. Pengolahan limbah jerami jagung menjadi pakan ternak tidak hanya mengurangi pemborosan tetapi juga menguntungkan bagi petani dan peternak.',
+    audio_url: null,
+    video_url: 'https://youtu.be/P1c6Q7ApZzs?si=otc5DF_5skNOiHZg',
+    image: 'edukasi2.jpeg',
+  },
+  {
+    title: 'Biogas dari Limbah Pertanian',
+    content:
+      'Limbah pertanian, yang sering kali dianggap sebagai produk sampingan tak berguna, sebenarnya memiliki potensi besar untuk diolah menjadi sumber energi terbarukan, yaitu biogas. Biogas merupakan gas yang dihasilkan dari proses fermentasi anaerobik (tanpa oksigen).',
+    audio_url: null,
+    video_url: 'https://youtu.be/fKddqY-oFf4?si=un_U_65l9m4qbRXQ',
+    image: 'edukasi3.jpeg',
+  },
+];
+
+// Loop untuk memasukkan data ke dalam tabel educations
+for (const education of educations) {
+  await connection.query(
+    `
+    INSERT INTO educations (title, content, audio_url, video_url, image)
+    VALUES (?, ?, ?, ?, ?)
+  `,
+    [
+      education.title,
+      education.content,
+      education.audio_url,
+      education.video_url,
+      education.image,
+    ]
+  );
+}
+
+console.log('Education data seeded successfully.');
+
+const newsData = [
+  {
+    title: 'Sumatera Utara ekspor pakan ternak dari limbah jagung ke Korea Selatan',
+    content: `Medan (ANTARA) - Sumatera Utara mulai mengekspor pakan ternak dari bahan limbah jagung ke Korea Selatan. "Untuk tahap awal ekspor pakan ternak dari limbah jagung ke Korea Selatan itu sebanyak 190,4 ton," ujar Kepala Karantina Pertanian Belawan Belawan, Andi Yusmanto di Medan, Senin.
+
+Ekspor pakan ternak yang dilakukan PT Sumatra Harapan Niaga itu tercatat senilai Rp559 juta.
+
+"Sebelum diekspor ke Korea Selatan telah dilakukan serangkaian tindakan karantina pertanian untuk memastikan komoditas itu aman dan sehat sampai di negara tujuan," ujar Andi Yusmanto.
+
+Menurut Andi, pakan ternak asal sub sektor peternakan yang diekspor tersebut merupakan komoditas baru karena bahannya terbuat dari limbah jagung dalam bentuk pellet "Corn Mixed Fiber Pellet".
+
+Karantina Pertanian terus mendorong ekspor pakan ternak dari limbah jagung itu karena potensinya yang masih cukup besar.
+
+Karantina Pertanian terus melakukan pendampingan kepada pelaku usaha, dengan melakukan bimbingan teknis sanitari dan fitosanitari sebagai persyaratan negara tujuan ekspor.
+
+Kemudian meningkatkan sinergisitas dengan entitas terkait serta memberikan percepatan layanan karantina guna meningkatkan nilai daya saing komoditas ekspor.
+
+"Ekspor pakan ternak dari limbah jagung itu juga akan memberi arti positif bagi petani jagung yakni mendapat tambahan pendapatan," katanya.
+
+Kepala Badan Karantina Pertanian (Barantan), Bambang, mengatakan, ekspor pakan ternak Sumut itu mendukung Gerakan Tiga Kali yang digagas Menteri Pertanian Syahrul Yasin Limpo.
+
+"Barantan mengapresiasi pengusaha Sumut yang bisa mengekspor pakan ternak dari bahan limbah jagung karena ikut mendorong ekspor komoditas pertanian," katanya.`,
+    image_url: 'news.jpeg',
+    date: new Date('2024-12-15T00:00:00'), // Sesuaikan tanggal sesuai kebutuhan
+    source_url: 'https://sumut.antaranews.com/berita/483529/sumatera-utara-ekspor-pakan-ternak-dari-limbah-jagung-ke-korea-selatan',
+  },
+];
+
+// Loop untuk memasukkan data ke dalam tabel news
+for (const news of newsData) {
+  await connection.query(
+    `
+    INSERT INTO news (title, content, image_url, date, source_url)
+    VALUES (?, ?, ?, ?, ?)
+  `,
+    [news.title, news.content, news.image_url, news.date, news.source_url]
+  );
+}
+
+console.log('News data seeded successfully.');
 
     console.log("Admin user created successfully.");
 
