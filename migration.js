@@ -181,5 +181,7 @@ console.log("Features seeded successfully.");
   }
 };
 
+
+
 // Jalankan migrasi dan seeding
 migrateAndSeed();
